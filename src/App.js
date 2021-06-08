@@ -41,11 +41,13 @@ function App() {
       </nav>
       <main className="emails">
         <ul>
-          {emails.map(function (email) {
+          {emails.map(email => {
             return (
-              <li>
-                <input type="checkbox" />{' '}
-                {(email.starred, email.sender, email.title)}
+              <li className="email">
+                <input type="checkbox" />
+                <input className="star-checkbox" type="checkbox" />
+                <span>{email.sender}</span>
+                <p className="title">{email.title}</p>
               </li>
             )
           })}
