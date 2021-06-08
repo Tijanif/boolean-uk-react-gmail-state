@@ -8,6 +8,28 @@ import { useState } from 'react'
 function App() {
   const [emails, setEmails] = useState(initialEmails)
 
+  const toggleRead = email => {
+    setEmails(
+      emails.map(thingToChange => {
+        if (email.id === thingToChange.id) {
+          return { ...email, read: !email.read }
+        } else {
+          return thingToChange
+        }
+      })
+    )
+  }
+  const toggleStar = email => {
+    setEmails(
+      emails.map(thingToCheack => {
+        if (email.id === thingToCheack.id) {
+          return { ...email, starred: !thingToCheack.starred }
+        } else {
+          return thingToCheack
+        }
+      })
+    )
+  }
   return (
     <div className="app">
       <Header />
@@ -44,8 +66,16 @@ function App() {
           {emails.map(email => {
             return (
               <li className="email">
-                <input type="checkbox" />
-                <input className="star-checkbox" type="checkbox" />
+                <input
+                  type="checkbox"
+                  checked={email.read}
+                  onChange={() => toggleRead(email)}
+                />
+                <input
+                  className="star-checkbox"
+                  type="checkbox"
+                  onChange={() => toggleStar(email)}
+                />
                 <span>{email.sender}</span>
                 <p className="title">{email.title}</p>
               </li>
