@@ -7,6 +7,7 @@ import { useState } from 'react'
 
 function App() {
   const [emails, setEmails] = useState(initialEmails)
+  const [hideReadEmails, setHideReadEmails] = useState(false)
 
   const toggleRead = email => {
     setEmails(
@@ -30,6 +31,12 @@ function App() {
       })
     )
   }
+
+  const getReadEmails = emails => {
+    const readEmails = emails.filter(email => email.read === true)
+    return readEmails
+  }
+
   return (
     <div className="app">
       <Header />
@@ -55,8 +62,10 @@ function App() {
             <input
               id="hide-read"
               type="checkbox"
-              checked={false}
-              // onChange={() => {}}
+              checked={hideReadEmails}
+              onChange={event => {
+                setHideReadEmails(event.target.checked)
+              }}
             />
           </li>
         </ul>
