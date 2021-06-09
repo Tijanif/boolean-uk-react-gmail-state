@@ -32,10 +32,9 @@ function App() {
     )
   }
 
-  const getReadEmails = emails => {
-    const readEmails = emails.filter(email => email.read === true)
-    return readEmails
-  }
+  const emailsToRender = hideReadEmails
+    ? emails.filter(email => email.read)
+    : emails
 
   return (
     <div className="app">
@@ -58,7 +57,7 @@ function App() {
           </li>
 
           <li className="item toggle">
-            <label for="hide-read">Hide read</label>
+            <label htmlFor="hide-read">Hide read</label>
             <input
               id="hide-read"
               type="checkbox"
@@ -72,9 +71,9 @@ function App() {
       </nav>
       <main className="emails">
         <ul>
-          {emails.map(email => {
+          {emailsToRender.map(email => {
             return (
-              <li className="email">
+              <li key={email.id} className="email">
                 <input
                   type="checkbox"
                   checked={email.read}
