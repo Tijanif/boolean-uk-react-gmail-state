@@ -9,6 +9,12 @@ function App() {
   const [emails, setEmails] = useState(initialEmails)
   const [hideReadEmails, setHideReadEmails] = useState(false)
 
+  // find how many are in inbox
+  const inboxEmails = emails.filter(email => !email.read).length
+
+  // find how many are in starred
+  const starredEmail = emails.filter(email => email.starred).length
+
   const toggleRead = email => {
     setEmails(
       emails.map(thingToChange => {
@@ -33,7 +39,7 @@ function App() {
   }
 
   const emailsToRender = hideReadEmails
-    ? emails.filter(email => email.read)
+    ? emails.filter(email => !email.read)
     : emails
 
   return (
@@ -46,14 +52,14 @@ function App() {
             // onClick={() => {}}
           >
             <span className="label">Inbox</span>
-            <span className="count">?</span>
+            <span className="count">{inboxEmails}</span>
           </li>
           <li
             className="item"
             // onClick={() => {}}
           >
             <span className="label">Starred</span>
-            <span className="count">?</span>
+            <span className="count">{starredEmail}</span>
           </li>
 
           <li className="item toggle">
