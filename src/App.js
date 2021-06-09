@@ -8,6 +8,7 @@ import { useState } from 'react'
 function App() {
   const [emails, setEmails] = useState(initialEmails)
   const [hideReadEmails, setHideReadEmails] = useState(false)
+  const [clickStatus, setClickStatus] = useState('')
 
   // find how many are in inbox
   const inboxEmails = emails.filter(email => !email.read).length
@@ -38,9 +39,13 @@ function App() {
     )
   }
 
-  const emailsToRender = hideReadEmails
-    ? emails.filter(email => !email.read)
-    : emails
+  let emailsToRender = emails
+  if (clickStatus === 'inbox')
+    emailsToRender = emailsToRender.filter(email => !email.read)
+  if (clickStatus === 'starred')
+    emailsToRender = emailsToRender.filter(email => email.starred)
+  if (hideReadEmails)
+    emailsToRender = emailsToRender.filter(email => !email.read)
 
   return (
     <div className="app">
@@ -49,14 +54,26 @@ function App() {
         <ul className="inbox-list">
           <li
             className="item active"
-            // onClick={() => {}}
+            onClick={() => {
+              if (clickStatus === '') {
+                setClickStatus('inbox')
+              } else {
+                setClickStatus('')
+              }
+            }}
           >
             <span className="label">Inbox</span>
             <span className="count">{inboxEmails}</span>
           </li>
           <li
             className="item"
-            // onClick={() => {}}
+            onClick={() => {
+              if (clickStatus === '') {
+                setClickStatus('starred')
+              } else {
+                setClickStatus('')
+              }
+            }}
           >
             <span className="label">Starred</span>
             <span className="count">{starredEmail}</span>
@@ -79,8 +96,12 @@ function App() {
         <ul>
           {emailsToRender.map(email => {
             return (
-              <li key={email.id} className="email">
+              <li
+                key={email.id}
+                className={`email ${email.read ? 'read' : 'unread'}`}
+              >
                 <input
+                  className="read-checkbox"
                   type="checkbox"
                   checked={email.read}
                   onChange={() => toggleRead(email)}
@@ -88,6 +109,7 @@ function App() {
                 <input
                   className="star-checkbox"
                   type="checkbox"
+                  checked={email.starred}
                   onChange={() => toggleStar(email)}
                 />
                 <span>{email.sender}</span>
