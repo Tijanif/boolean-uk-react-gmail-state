@@ -27,8 +27,18 @@ function App() {
       })
     )
   }
+  //  const toggleStar = targetEmail => {
+  //    const updatedEmails = emails =>
+  //      emails.map(email =>
+  //        email.id === targetEmail.id
+  //          ? { ...email, starred: !email.starred }
+  //          : email
+  //      )
+  //    setEmails(updatedEmails)
+  //  }
+
   const toggleStar = email => {
-    setEmails(
+    const updatedEmails = emails =>
       emails.map(thingToCheack => {
         if (email.id === thingToCheack.id) {
           return { ...email, starred: !thingToCheack.starred }
@@ -36,7 +46,7 @@ function App() {
           return thingToCheack
         }
       })
-    )
+    setEmails(updatedEmails)
   }
 
   let emailsToRender = emails
