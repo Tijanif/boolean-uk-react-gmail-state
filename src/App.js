@@ -39,13 +39,11 @@ function App() {
 
   const toggleStar = email => {
     const updatedEmails = emails =>
-      emails.map(thingToCheack => {
-        if (email.id === thingToCheack.id) {
-          return { ...email, starred: !thingToCheack.starred }
-        } else {
-          return thingToCheack
-        }
-      })
+      emails.map(thingToCheack =>
+        email.id === thingToCheack.id
+          ? { ...email, starred: !thingToCheack.starred }
+          : thingToCheack
+      )
     setEmails(updatedEmails)
   }
 
